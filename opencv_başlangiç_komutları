@@ -1,0 +1,4 @@
+-source ~/.profile
+-workon cv
+-sudo modprobe bcm2835-v4l2 
+Daha sonra python veya python3 komutu ile istediğiniz opencv uygulamasını kullanabilirsiniz.
