@@ -80,8 +80,9 @@ while True:
         break
 
 # Do a bit of cleanup
-print("\n [INFO] Exiting Program and cleanup stuff")
+print("\n Program kapatiliyor")
 cam.release()
 cv2.destroyAllWindows()
+print("\n Program kapatidi")
 
 
