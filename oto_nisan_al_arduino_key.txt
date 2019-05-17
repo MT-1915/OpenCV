@@ -1,0 +1,9 @@
+dur : 0
+x motor sağ: 1
+x motor sol: 2
+z motor yukarı: 3
+z motor aşağı: 4
+x motor sağ ,z motor yukarı: 5
+x motor sağ ,z motor aşağı: 6
+x motor sol ,z motor yukarı: 7
+x motor sol ,z motor aşağı: 8
