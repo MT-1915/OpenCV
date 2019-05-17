@@ -1,12 +1,12 @@
 
-int x=3
+int x=3;
 int xd = 4;
 int y = 5;
 int yd = 6;
-int oku=0
+int oku=0;
 void setup() {
   // put your setup code here, to run once:
-Serial.begin(9600)
+Serial.begin(9600);
 pinMode(x , OUTPUT);
 pinMode(xd , OUTPUT);
 pinMode(y , OUTPUT);
