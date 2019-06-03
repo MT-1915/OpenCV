@@ -1,4 +1,4 @@
-dur : 0
+dur : 9
 x motor sağ: 1
 x motor sol: 2
 z motor yukarı: 3
