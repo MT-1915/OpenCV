@@ -3,7 +3,6 @@ import RPi.GPIO as GPIO
 import cv2
 import numpy as np
 import os 
-import pyserial
 import serial
  
 GPIO.cleanup()
@@ -15,7 +14,7 @@ faceCascade = cv2.CascadeClassifier(cascadePath);
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 
-serialport = serial.Serial('ttyUSB0', 9600)
+serialport = serial.Serial('/dev/ttyUSB0', 9600)
 
 
 #serialport.write(bytes(deger, 'utf-8'))
@@ -76,6 +75,7 @@ def hrkt(pin,yon,yonp,zaman):#step pin,yon,yon pin,zaman
             time.sleep(zaman)
             GPIO.output(pin,GPIO.LOW)
             time.sleep(zaman)
+
 def ates():
     print("ates")
 
@@ -84,7 +84,7 @@ def ates():
 
 
 
-zmn=0.001
+
 
 while True:
 
@@ -129,15 +129,8 @@ while True:
             yp=0
 
         if(id==0):
-            print (id)
-            hrkt(xx,0,yonx,0) 
-            hrkt(zz,0,yonz,0)     
-
-            GPIO.output(xx ,GPIO.LOW)   
-            GPIO.output(yonx ,GPIO.LOW)    
-            GPIO.output(zz ,GPIO.LOW)   
-            GPIO.output(yonz ,GPIO.LOW)
-
+            print (id)    
+            serialport.write(bytes(str(9), 'utf-8'))               
             print("Dur ")
 
 
@@ -155,57 +148,64 @@ while True:
             r=255
             xp=0
             yp=0
-
+        b=0
         cv2.putText(img, id, (x+5,y-5), font, 1, (b,g,r), 2)
         cv2.putText(img, str(confidence), (x+5,y+h-5), font, 1, (b,g,r), 1)       
         cv2.rectangle(img, (x,y), (x+w,y+h), (b,g,r), 2)
 
         if(xp<360 and xp>280) :
             if(yp>200 and yp< 280):
-                serialport.write(bytes(0, 'utf-8'))               
+                serialport.write(bytes(str(9), 'utf-8'))               
                 print("Dur ")
 
         if(xp<xmin and yp>200 and yp< 280):
-            serialport.write(bytes(1, 'utf-8'))#sag
+            serialport.write(bytes(str(1), 'utf-8'))#sag
             print("Sag'a git ")
             
         if(xp>xmax and yp>200 and yp< 280):
-            serialport.write(bytes(2, 'utf-8'))#sol
+            serialport.write(bytes(str(2), 'utf-8'))#sol
             print("Sol'a git ")
 
         if(yp>ymax and xp<360 and xp>280):
-            serialport.write(bytes(3, 'utf-8'))#ust
+            serialport.write(bytes(str(3), 'utf-8'))#ust
             print("Ust'e git ")
 
         if(yp<ymin and xp<360 and xp>280 ):
-            serialport.write(bytes(4, 'utf-8'))#alt
+            serialport.write(bytes(str(4), 'utf-8'))#alt
             print("Alt'a git ")
 
         if(xp<xmin and yp>ymax):
-            serialport.write(bytes(5, 'utf-8'))#sag ust
+            serialport.write(bytes(str(5), 'utf-8'))#sag ust
             print("Sag uste git ")
             
         if(xp<xmin and yp<ymin):
-            serialport.write(bytes(6, 'utf-8'))#sag alt
+            serialport.write(bytes(str(6), 'utf-8'))#sag alt
             print("Sag asagiya git ")
             
 
         if(xp>xmax and yp>ymax):
-            serialport.write(bytes(7, 'utf-8'))#sol ust
+            serialport.write(bytes(str(7), 'utf-8'))#sol ust
             print("Sol uste git ")
             
         if(xp>xmax and yp<ymin):
-            serialport.write(bytes(8, 'utf-8'))#sol alt
+            serialport.write(bytes(str(8), 'utf-8'))#sol alt
             print("Sol alta git ")
-        
-            
+
+        if(xp==0 and yp==0):
+            serialport.write(bytes(str(9), 'utf-8'))               
+            print("Dur ")
+
+
+        #print (serialport.readline() )
+    
         print(xp,yp)
     
     cv2.imshow('camera',img) 
 
     k = cv2.waitKey(10) & 0xff # Press 'ESC' for exiting video
     if k == 27:
+        serialport.write(bytes(str(9), 'utf-8'))               
+        print("Dur ")
         break
 
-        time.sleep(0.005)
-
+        #time.sleep(0.3)
